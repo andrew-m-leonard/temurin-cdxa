@@ -29,7 +29,6 @@
     </claims>
     <evidence>
        <evidence bom-ref="evidence-2">
-          <propertyName>VERaaIFICATION_LOG</propertyName>
           <data>
             <name>loga</name>
             <contents>
