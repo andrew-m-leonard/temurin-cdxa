@@ -136,7 +136,6 @@ jobs:
                    echo "ERROR: $XML_FILE CDXA document /bom/declarations/claims/claim/evidence($CLAIM_EVIDENCE) does not match /bom/declarations/evidence/evidence/@bom-ref($EVIDENCE_BOM_REF)"
                    exit 1
               fi
-              fi
 
               # Verify claim target with bom-ref exists
               TARGET_BOM_REF=$(xpath -q -e '/bom/declarations/claims/claim/predicate[text()="VERIFIED_REPRODUCIBLE_BUILD"]/../target/text()' "$XML_FILE")
@@ -247,6 +246,8 @@ jobs:
               if [[ -z "$AFFIRMATION_STMT" ]]; then
                    echo "ERROR: $XML_FILE CDXA document /bom/declarations/affirmation/statement is not specified"
                    exit 1
+              fi
+
               # Verify evidence element exists with required structure
               if ! [ $(xpath -q -e 'count(/bom/declarations/evidence)' "$XML_FILE") -eq 1 ]; then
                    echo "ERROR: $XML_FILE CDXA document does not contain a single /bom/declarations/evidence element"
@@ -307,8 +308,6 @@ jobs:
               if [[ -z "$EVIDENCE_ATTACHMENT_CONTENT" ]]; then
                    echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/contents/attachment does not contain any content"
                    exit 1
-              fi
-
               fi
             done
           fi
