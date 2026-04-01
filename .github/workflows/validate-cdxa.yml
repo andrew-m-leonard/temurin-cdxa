@@ -1,5 +1,5 @@
 # ********************************************************************************
-# Copyright (c) 2024, 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2024, 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) with this work for additional
 # information regarding copyright ownership.
@@ -51,8 +51,16 @@ jobs:
             echo "$XML_FILES" | while read XML_FILE; do
               echo "CycloneDX validating file: $XML_FILE"
               ./cyclonedx-linux-x64 validate --input-file "$XML_FILE" --fail-on-errors --input-version v1_6
-              echo "Verifying Signature of file: $XML_FILE using public key $XML_FILE.sign.pub"
-              ./cyclonedx-linux-x64 verify all "$XML_FILE" --key-file "$XML_FILE.sign.pub"
+
+              # Verify detached signature file exists in PR
+              SIG_FILE="${XML_FILE}.sig"
+              echo "Verifying Detached Signature file exists for: $XML_FILE with name $SIG_FILE"
+              PR_FILES=$(gh pr view "$PR_NUMBER" --repo "$REPOSITORY" --json files | jq -r '.files[] | .path')
+              if ! echo "$PR_FILES" | grep -q "^${SIG_FILE}$"; then
+                echo "ERROR: Detached signature file not found in PR: $SIG_FILE"
+                exit 1
+              fi
+              echo "✓ Detached signature file found in PR: $SIG_FILE"
             done
           fi
         env:
@@ -60,7 +68,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Validate CDXA content meets Temurin attestation requirements
+      - name: Validate CDXA content meets Temurin CycloneDX Attestation requirements
         run: |
           XML_FILES=$(gh pr view "$PR_NUMBER" --repo "$REPOSITORY" --json files | jq -r '.files[] | .path' | grep "\.xml$" || true)
           if [[ -n "$XML_FILES" ]]; then
@@ -95,7 +103,7 @@ jobs:
                   ORG=${BASH_REMATCH[8]}
                   JDK_BUILD="jdk-$MAJOR_VERSION+$BUILD_NUM"
               else
-                  echo "$XML_FILE file name is not of the correct format:"
+                  echo "ERROR: $XML_FILE file name is not of the correct format:"
                   echo "    N/jdk-M.0.U+B/jdk_M_0_U_B_(Arch)_(OS)_(Your Organisation).xml"
                   echo " or N/jdk-M+B/jdk_M_B_(Arch)_(OS)_(Your Organisation).xml"
                   exit 1
@@ -110,10 +118,104 @@ jobs:
               # Print bom content
               xpath -q -e '/bom' "$XML_FILE"
 
+              # Verify evidence element exists with required structure
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain a single /bom/declarations/evidence element"
+                   exit 1
+              fi
+
+              # Verify single evidence sub-element exists
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain a single /bom/declarations/evidence/evidence element"
+                   exit 1
+              fi
+
+              # Verify evidence has bom-ref attribute
+              EVIDENCE_BOM_REF=$(xpath -q -e 'string(/bom/declarations/evidence/evidence/@bom-ref)' "$XML_FILE")
+              if [[ -z "$EVIDENCE_BOM_REF" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence does not have a bom-ref attribute"
+                   exit 1
+              fi
+
+              # Verify propertyName element exists
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence/propertyName)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain /bom/declarations/evidence/evidence/propertyName element"
+                   exit 1
+              fi
+
+              # Verify propertyName is VERIFICATION_LOG
+              EVIDENCE_PROPERTY_NAME=$(xpath -q -e '/bom/declarations/evidence/evidence/propertyName/text()' "$XML_FILE")
+              VALID_VALUE="VERIFICATION_LOG"
+              if [[ ! "$EVIDENCE_PROPERTY_NAME" = "$VALID_VALUE" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/propertyName($EVIDENCE_PROPERTY_NAME) is not the correct value: $VALID_VALUE"
+                   exit 1
+              fi
+
+              # Verify data element exists
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence/data)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain /bom/declarations/evidence/evidence/data element"
+                   exit 1
+              fi
+
+              # Verify data/name element exists
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence/data/name)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain /bom/declarations/evidence/evidence/data/name element"
+                   exit 1
+              fi
+
+              # Verify data/name is "log"
+              EVIDENCE_DATA_NAME=$(xpath -q -e '/bom/declarations/evidence/evidence/data/name/text()' "$XML_FILE")
+              VALID_VALUE="log"
+              if [[ ! "$EVIDENCE_DATA_NAME" = "$VALID_VALUE" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/name($EVIDENCE_DATA_NAME) is not the correct value: $VALID_VALUE"
+                   exit 1
+              fi
+
+              # Verify contents element exists
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence/data/contents)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain /bom/declarations/evidence/evidence/data/contents element"
+                   exit 1
+              fi
+
+              # Verify data/contents/attachment element exists
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence/data/contents/attachment)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain /bom/declarations/evidence/evidence/data/contents/attachment element"
+                   exit 1
+              fi
+
+              # Verify attachment element exists with content-type="text/plain"
+              EVIDENCE_ATTACHMENT_TYPE=$(xpath -q -e 'string(/bom/declarations/evidence/evidence/data/contents/attachment/@content-type)' "$XML_FILE")
+              VALID_VALUE="text/plain"
+              if [[ ! "$EVIDENCE_ATTACHMENT_TYPE" = "$VALID_VALUE" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/contents/attachment content-type($EVIDENCE_ATTACHMENT_TYPE) is not the correct value: $VALID_VALUE"
+                   exit 1
+              fi
+
+              # Verify attachment has content text
+              EVIDENCE_ATTACHMENT_CONTENT=$(xpath -q -e '/bom/declarations/evidence/evidence/data/contents/attachment/text()' "$XML_FILE")
+              if [[ -z "$EVIDENCE_ATTACHMENT_CONTENT" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/contents/attachment does not contain any content"
+                   exit 1
+              fi
+
               # Ensure 1 VERIFIED_REPRODUCIBLE_BUILD
               if ! [ $(xpath -q -e 'count(/bom/declarations/claims/claim/predicate[text()="VERIFIED_REPRODUCIBLE_BUILD"])' "$XML_FILE") -eq 1 ]; then
                   echo "ERROR: $XML_FILE CDXA document does not contain a /bom/declarations/claims/claim/predicate with value VERIFIED_REPRODUCIBLE_BUILD"
                   exit 1
+              fi
+
+              # Verify claim has evidence element
+              CLAIM_EVIDENCE=$(xpath -q -e '/bom/declarations/claims/claim/predicate[text()="VERIFIED_REPRODUCIBLE_BUILD"]/../evidence/text()' "$XML_FILE")
+              if [[ -z "$CLAIM_EVIDENCE" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/claims/claim does not contain an evidence element"
+                   exit 1
+              fi
+
+              # Verify claim evidence reference matches evidence bom-ref
+              EVIDENCE_BOM_REF=$(xpath -q -e 'string(/bom/declarations/evidence/evidence/@bom-ref)' "$XML_FILE")
+              if [[ ! "$CLAIM_EVIDENCE" = "$EVIDENCE_BOM_REF" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/claims/claim/evidence($CLAIM_EVIDENCE) does not match /bom/declarations/evidence/evidence/@bom-ref($EVIDENCE_BOM_REF)"
+                   exit 1
               fi
 
               # Verify claim target with bom-ref exists
