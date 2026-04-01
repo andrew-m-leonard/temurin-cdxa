@@ -31,6 +31,7 @@
        <evidence bom-ref="evidence-2">
           <propertyName>VERIFICATION_LOG</propertyName>
           <data>
+            <name>log</name>
           </data>
       </evidence>
     </evidence>
