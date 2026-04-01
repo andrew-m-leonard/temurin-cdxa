@@ -52,7 +52,7 @@ and is 100% identical!
             <reference type="distribution">
               <url>https://api.adoptium.net/v3/binary/version/jdk-26+35/linux/aarch64/jdk/hotspot/normal/eclipse</url>
               <hashes>
-                <hash alg="SHA-256">3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd6c</hash>
+                <hash alg="SHA-256">e8ff1f23c5acef74d1b4937dadd67286d67be06758f5d9dca5478c35bf404e83</hash>
               </hashes>
             </reference>
           </externalReferences>
