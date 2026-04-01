@@ -23,7 +23,7 @@
     <claims>
       <claim bom-ref="claim-1">
         <target>target-jdk-1</target>
-        <predicate>VERIFIED_REPRODUCIBLE_BULD</predicate>
+        <predicate>VERIFIED_REPRODUCIBLE_BUILD</predicate>
       </claim>
     </claims>
     <evidence>
