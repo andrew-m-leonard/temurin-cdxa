@@ -24,7 +24,6 @@
       <claim bom-ref="claim-1">
         <target>target-jdk-1</target>
         <predicate>VERIFIED_REPRODUCIBLE_BUILD</predicate>
-        <evidence>evidence-1</evidence>
       </claim>
     </claims>
     <evidence>
