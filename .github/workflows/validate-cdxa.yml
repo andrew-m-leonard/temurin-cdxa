@@ -122,6 +122,7 @@ jobs:
               if ! [ $(xpath -q -e 'count(/bom/declarations/claims/claim/predicate[text()="VERIFIED_REPRODUCIBLE_BUILD"])' "$XML_FILE") -eq 1 ]; then
                   echo "ERROR: $XML_FILE CDXA document does not contain a /bom/declarations/claims/claim/predicate with value VERIFIED_REPRODUCIBLE_BUILD"
                   exit 1
+              fi
 
               # Verify claim has evidence element
               CLAIM_EVIDENCE=$(xpath -q -e '/bom/declarations/claims/claim/predicate[text()="VERIFIED_REPRODUCIBLE_BUILD"]/../evidence/text()' "$XML_FILE")
