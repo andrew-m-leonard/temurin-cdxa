@@ -46,7 +46,7 @@ and is 100% identical!
     <targets>
       <components>
         <component type="application" bom-ref="target-jdk-1">
-          <name>Temurin jdk-26+10 aarch64 Linux</name>
+          <name>Temurin jdk-26+10 aarch64_linux</name>
           <version>jdk-26+10</version>
           <externalReferences>
             <reference type="distribution">
