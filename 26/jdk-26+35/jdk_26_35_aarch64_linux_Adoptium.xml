@@ -30,6 +30,8 @@
     <evidence>
        <evidence bom-ref="evidence-2">
           <propertyName>VERIFICATION_LOG</propertyName>
+          <data>
+          </data>
       </evidence>
     </evidence>
     <targets>
