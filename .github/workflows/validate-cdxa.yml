@@ -309,8 +309,6 @@ jobs:
                    echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/contents/attachment does not contain any content"
                    exit 1
               fi
-
-              fi
             done
           fi
         env:
