@@ -24,9 +24,27 @@
       <claim bom-ref="claim-1">
         <target>target-jdk-1</target>
         <predicate>VERIFIED_REPRODUCIBLE_BUILD</predicate>
-        <evidence>evidence-2</evidence>
+        <evidence>evidence-1</evidence>
       </claim>
     </claims>
+    <evidence>
+       <evidence bom-ref="evidence-2">
+          <propertyName>VERaaIFICATION_LOG</propertyName>
+          <data>
+            <name>loga</name>
+            <contents>
+              <attachment content-type="text/plai1n">
+Reproducible script output...it is...
+
+successfully compared
+123456 files
+
+and is 100% identical!
+              </attachment>
+            </contents>
+          </data>
+      </evidence>
+    </evidence>
     <targets>
       <components>
         <component type="application" bom-ref="target-jdk-1">
