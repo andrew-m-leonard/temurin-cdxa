@@ -31,7 +31,6 @@
        <evidence bom-ref="evidence-2">
           <propertyName>VERIFICATION_LOG</propertyName>
           <data>
-            <name>loga</name>
             <contents>
               <attachment content-type="text/plai1n">
 Reproducible script output...it is...
