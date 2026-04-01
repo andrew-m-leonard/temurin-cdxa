@@ -118,6 +118,68 @@ jobs:
               # Print bom content
               xpath -q -e '/bom' "$XML_FILE"
 
+              # Verify evidence element exists with required structure
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain a single /bom/declarations/evidence element"
+                   exit 1
+              fi
+
+              # Verify single evidence sub-element exists
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain a single /bom/declarations/evidence/evidence element"
+                   exit 1
+              fi
+
+              # Verify evidence has bom-ref attribute
+              EVIDENCE_BOM_REF=$(xpath -q -e 'string(/bom/declarations/evidence/evidence/@bom-ref)' "$XML_FILE")
+              if [[ -z "$EVIDENCE_BOM_REF" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence does not have a bom-ref attribute"
+                   exit 1
+              fi
+
+              # Verify propertyName is VERIFICATION_LOG
+              EVIDENCE_PROPERTY_NAME=$(xpath -q -e '/bom/declarations/evidence/evidence/propertyName/text()' "$XML_FILE")
+              VALID_VALUE="VERIFICATION_LOG"
+              if [[ ! "$EVIDENCE_PROPERTY_NAME" = "$VALID_VALUE" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/propertyName($EVIDENCE_PROPERTY_NAME) is not the correct value: $VALID_VALUE"
+                   exit 1
+              fi
+
+              # Verify data element exists
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence/data)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain /bom/declarations/evidence/evidence/data element"
+                   exit 1
+              fi
+
+              # Verify data/name is "log"
+              EVIDENCE_DATA_NAME=$(xpath -q -e '/bom/declarations/evidence/evidence/data/name/text()' "$XML_FILE")
+              VALID_VALUE="log"
+              if [[ ! "$EVIDENCE_DATA_NAME" = "$VALID_VALUE" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/name($EVIDENCE_DATA_NAME) is not the correct value: $VALID_VALUE"
+                   exit 1
+              fi
+
+              # Verify contents element exists
+              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence/data/contents)' "$XML_FILE") -eq 1 ]; then
+                   echo "ERROR: $XML_FILE CDXA document does not contain /bom/declarations/evidence/evidence/data/contents element"
+                   exit 1
+              fi
+
+              # Verify attachment element exists with content-type="text/plain"
+              EVIDENCE_ATTACHMENT_TYPE=$(xpath -q -e 'string(/bom/declarations/evidence/evidence/data/contents/attachment/@content-type)' "$XML_FILE")
+              VALID_VALUE="text/plain"
+              if [[ ! "$EVIDENCE_ATTACHMENT_TYPE" = "$VALID_VALUE" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/contents/attachment content-type($EVIDENCE_ATTACHMENT_TYPE) is not the correct value: $VALID_VALUE"
+                   exit 1
+              fi
+
+              # Verify attachment has content
+              EVIDENCE_ATTACHMENT_CONTENT=$(xpath -q -e '/bom/declarations/evidence/evidence/data/contents/attachment/text()' "$XML_FILE")
+              if [[ -z "$EVIDENCE_ATTACHMENT_CONTENT" ]]; then
+                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/contents/attachment does not contain any content"
+                   exit 1
+              fi
+
               # Ensure 1 VERIFIED_REPRODUCIBLE_BUILD
               if ! [ $(xpath -q -e 'count(/bom/declarations/claims/claim/predicate[text()="VERIFIED_REPRODUCIBLE_BUILD"])' "$XML_FILE") -eq 1 ]; then
                   echo "ERROR: $XML_FILE CDXA document does not contain a /bom/declarations/claims/claim/predicate with value VERIFIED_REPRODUCIBLE_BUILD"
@@ -246,68 +308,6 @@ jobs:
               AFFIRMATION_STMT=$(xpath -q -e '/bom/declarations/affirmation/statement' "$XML_FILE")
               if [[ -z "$AFFIRMATION_STMT" ]]; then
                    echo "ERROR: $XML_FILE CDXA document /bom/declarations/affirmation/statement is not specified"
-                   exit 1
-              fi
-
-              # Verify evidence element exists with required structure
-              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence)' "$XML_FILE") -eq 1 ]; then
-                   echo "ERROR: $XML_FILE CDXA document does not contain a single /bom/declarations/evidence element"
-                   exit 1
-              fi
-
-              # Verify single evidence sub-element exists
-              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence)' "$XML_FILE") -eq 1 ]; then
-                   echo "ERROR: $XML_FILE CDXA document does not contain a single /bom/declarations/evidence/evidence element"
-                   exit 1
-              fi
-
-              # Verify evidence has bom-ref attribute
-              EVIDENCE_BOM_REF=$(xpath -q -e 'string(/bom/declarations/evidence/evidence/@bom-ref)' "$XML_FILE")
-              if [[ -z "$EVIDENCE_BOM_REF" ]]; then
-                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence does not have a bom-ref attribute"
-                   exit 1
-              fi
-
-              # Verify propertyName is VERIFICATION_LOG
-              EVIDENCE_PROPERTY_NAME=$(xpath -q -e '/bom/declarations/evidence/evidence/propertyName/text()' "$XML_FILE")
-              VALID_VALUE="VERIFICATION_LOG"
-              if [[ ! "$EVIDENCE_PROPERTY_NAME" = "$VALID_VALUE" ]]; then
-                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/propertyName($EVIDENCE_PROPERTY_NAME) is not the correct value: $VALID_VALUE"
-                   exit 1
-              fi
-
-              # Verify data element exists
-              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence/data)' "$XML_FILE") -eq 1 ]; then
-                   echo "ERROR: $XML_FILE CDXA document does not contain /bom/declarations/evidence/evidence/data element"
-                   exit 1
-              fi
-
-              # Verify data/name is "log"
-              EVIDENCE_DATA_NAME=$(xpath -q -e '/bom/declarations/evidence/evidence/data/name/text()' "$XML_FILE")
-              VALID_VALUE="log"
-              if [[ ! "$EVIDENCE_DATA_NAME" = "$VALID_VALUE" ]]; then
-                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/name($EVIDENCE_DATA_NAME) is not the correct value: $VALID_VALUE"
-                   exit 1
-              fi
-
-              # Verify contents element exists
-              if ! [ $(xpath -q -e 'count(/bom/declarations/evidence/evidence/data/contents)' "$XML_FILE") -eq 1 ]; then
-                   echo "ERROR: $XML_FILE CDXA document does not contain /bom/declarations/evidence/evidence/data/contents element"
-                   exit 1
-              fi
-
-              # Verify attachment element exists with content-type="text/plain"
-              EVIDENCE_ATTACHMENT_TYPE=$(xpath -q -e 'string(/bom/declarations/evidence/evidence/data/contents/attachment/@content-type)' "$XML_FILE")
-              VALID_VALUE="text/plain"
-              if [[ ! "$EVIDENCE_ATTACHMENT_TYPE" = "$VALID_VALUE" ]]; then
-                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/contents/attachment content-type($EVIDENCE_ATTACHMENT_TYPE) is not the correct value: $VALID_VALUE"
-                   exit 1
-              fi
-
-              # Verify attachment has content
-              EVIDENCE_ATTACHMENT_CONTENT=$(xpath -q -e '/bom/declarations/evidence/evidence/data/contents/attachment/text()' "$XML_FILE")
-              if [[ -z "$EVIDENCE_ATTACHMENT_CONTENT" ]]; then
-                   echo "ERROR: $XML_FILE CDXA document /bom/declarations/evidence/evidence/data/contents/attachment does not contain any content"
                    exit 1
               fi
             done
