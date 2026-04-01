@@ -30,19 +30,7 @@
     <evidence>
        <evidence bom-ref="evidence-2">
           <propertyName>VERIFICATION_LOG</propertyName>
-          <data>
-            <contents>
-              <attachment content-type="text/plai1n">
-Reproducible script output...it is...
-
-
-successfully compared
-123456 files
-
-and is 100% identical!
-              </attachment>
-            </contents>
-          </data>
+          <name>log</name>
       </evidence>
     </evidence>
     <targets>
