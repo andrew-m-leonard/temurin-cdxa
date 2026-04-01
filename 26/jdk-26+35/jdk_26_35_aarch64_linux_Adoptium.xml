@@ -47,10 +47,10 @@ and is 100% identical!
       <components>
         <component type="application" bom-ref="target-jdk-1">
           <name>Temurin jdk-26+35 aarch64_linux</name>
-          <version>jdk-26+10</version>
+          <version>jdk-26+35</version>
           <externalReferences>
             <reference type="distribution">
-              <url>https://api.adoptium.net/v3/binary/version/jdk-26+10/linux/aarch64/jdk/hotspot/normal/eclipse</url>
+              <url>https://api.adoptium.net/v3/binary/version/jdk-26+35/linux/aarch64/jdk/hotspot/normal/eclipse</url>
               <hashes>
                 <hash alg="SHA-256">3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd6c</hash>
               </hashes>
