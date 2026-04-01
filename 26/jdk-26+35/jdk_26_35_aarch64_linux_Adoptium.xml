@@ -28,7 +28,7 @@
       </claim>
     </claims>
     <evidence>
-       <evidence bom-ref="evidence-2">
+       <evidence bom-ref="evidence-1">
           <propertyName>VERIFICATION_LOG</propertyName>
           <data>
             <name>log</name>
