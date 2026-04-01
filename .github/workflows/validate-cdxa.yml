@@ -147,6 +147,20 @@ jobs:
                   exit 1
               fi
 
+              # Verify Component.property(imageType) of format: jdk|jre
+              COMPONENT_IMAGETYPE=$(xpath -q -e '/bom/declarations/targets/components/component[@bom-ref="'$TARGET_BOM_REF'"]/properties/property[@name="imageType"]/text()' "$XML_FILE")
+              if [[ ! "$COMPONENT_IMAGETYPE" = "jdk" ]] && [[ ! "$COMPONENT_IMAGETYPE" = "jre" ]]; then
+                  echo "ERROR: $XML_FILE CDXA document /bom/declarations/targets/components/component/properties/property[@name='imageType']($COMPONENT_IMAGETYPE) is not one of: jdk | jre"
+                  exit 1
+              fi
+
+              # Verify Component.property(jvmImpl) of format: hotspot
+              COMPONENT_JVMIMPL=$(xpath -q -e '/bom/declarations/targets/components/component[@bom-ref="'$TARGET_BOM_REF'"]/properties/property[@name="jvmImpl"]/text()' "$XML_FILE")
+              if [[ ! "$COMPONENT_JVMIMPL" = "hotspot" ]]; then
+                  echo "ERROR: $XML_FILE CDXA document /bom/declarations/targets/components/component/properties/property[@name='jvmImpl']($COMPONENT_JVMIMPL) is not one of: hotspot"
+                  exit 1
+              fi
+
               # Verify Component.externalReferences.reference(distribution).url matches https://api.adoptium.net/v3/binary/version/<release>/<os>/<arch>/jdk/hotspot/normal/eclipse
               EXT_REF_URL=$(xpath -q -e '/bom/declarations/targets/components/component[@bom-ref="'$TARGET_BOM_REF'"]/externalReferences/reference[@type="distribution"]/url/text()' "$XML_FILE")
               VALID_VALUE="https://api.adoptium.net/v3/binary/version/${JDK_BUILD}/${PLATFORM_OS}/${PLATFORM_ARCH}/jdk/hotspot/normal/eclipse"
