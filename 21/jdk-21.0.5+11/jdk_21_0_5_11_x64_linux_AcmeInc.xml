@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:53df70da-7113-4bf3-9a30-d1605e97ba8f" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:90bcf245-480e-4fee-a5c8-ee3db7837a5e" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <declarations>
     <assessors>
       <assessor bom-ref="assessor-1">
@@ -53,6 +53,8 @@
           </externalReferences>
           <properties>
             <property name="platform">x64_linux</property>
+            <property name="imageType">jdk</property>
+            <property name="jvmImpl">hotspot</property>
           </properties>
         </component>
       </components>
