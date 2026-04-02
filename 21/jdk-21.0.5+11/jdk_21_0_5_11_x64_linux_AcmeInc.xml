@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:90bcf245-480e-4fee-a5c8-ee3db7837a5e" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:e1dd65ca-779f-4a9b-a2e1-069099a68469" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <declarations>
     <assessors>
       <assessor bom-ref="assessor-1">
@@ -47,7 +47,7 @@
             <reference type="distribution">
               <url>https://api.adoptium.net/v3/binary/version/jdk-21.0.5+11/linux/x64/jdk/hotspot/normal/eclipse</url>
               <hashes>
-                <hash alg="SHA-256">1234567890123456789012345678901234567890123456789012345678901234</hash>
+                <hash alg="SHA-256">3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd8c</hash>
               </hashes>
             </reference>
           </externalReferences>
