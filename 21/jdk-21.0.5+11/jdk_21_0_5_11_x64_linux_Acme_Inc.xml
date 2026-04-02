@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bom serialNumber="urn:uuid:cd50a3d1-9781-4cb4-a82b-f403c913b7b6" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+  <declarations>
+    <assessors>
+      <assessor bom-ref="assessor-1">
+        <thirdParty>true</thirdParty>
+        <organization>
+          <name>Acme Inc</name>
+        </organization>
+      </assessor>
+    </assessors>
+    <attestations>
+      <attestation>
+        <summary>Eclipse Temurin Attestation</summary>
+        <assessor>assessor-1</assessor>
+        <map>
+          <claims>
+            <claim>claim-1</claim>
+          </claims>
+        </map>
+      </attestation>
+    </attestations>
+    <claims>
+      <claim bom-ref="claim-1">
+        <target>target-jdk-1</target>
+        <predicate>VERIFIED_REPRODUCIBLE_BUILD</predicate>
+        <evidence>evidence-1</evidence>
+      </claim>
+    </claims>
+    <evidence>
+      <evidence bom-ref="evidence-1">
+        <propertyName>VERIFICATION_LOG</propertyName>
+        <data>
+          <name>log</name>
+          <contents>
+            <attachment content-type="text/plain">100% identical!</attachment>
+          </contents>
+        </data>
+      </evidence>
+    </evidence>
+    <targets>
+      <components>
+        <component type="application" bom-ref="target-jdk-1">
+          <name>Temurin jdk-21.0.5+11 x64_linux</name>
+          <version>jdk-21.0.5+11</version>
+          <externalReferences>
+            <reference type="distribution">
+              <url>https://api.adoptium.net/v3/binary/version/jdk-21.0.5+11/linux/x64/jdk/hotspot/normal/eclipse</url>
+              <hashes>
+                <hash alg="SHA-256">1234567890123456789012345678901234567890123456789012345678901234</hash>
+              </hashes>
+            </reference>
+          </externalReferences>
+          <properties>
+            <property name="platform">x64 linux</property>
+          </properties>
+        </component>
+      </components>
+    </targets>
+    <affirmation>
+      <statement>Acme confirms a verified reproducible build</statement>
+    </affirmation>
+  </declarations>
+</bom>
