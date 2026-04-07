@@ -33,8 +33,6 @@ java -cp "build/jar/temurin-gen-cdxa.jar:build/jar/cyclonedx-core-java.jar:build
 --verified-jdk-file /path-to-verified-tar.gz-or-zip \
 --affirmation-stmt 'Acme confirms a verified reproducible build' \
 --evidence 'Console log output from diff script......100% identical'
-
-
 ```
 
 ## CDXA.xml format
@@ -44,7 +42,7 @@ The CycloneDX Attestation document conforms to the schema defined here: https://
 The specific Temurin CDXA.xml required format and validation rules, for this project
 are as follows:
 - The filename and path for the CDXA.xml must be :
-  - <major version number>/<jdk-tag>/<jdk_tag>_<arch>_<os>_<your organization name>.xml
+  - <major version number>/<jdk-tag>/<jdk_tag>_<arch>_<os>_<your organization name, with no whitespace>.xml
     - Example: 26/jdk-26+35/jdk_26_35_aarch64_linux_AcmeLtd.xml
   - arch: x64, ppc64le, s390x, aarch64
   - os: linux, windows, mac
@@ -57,7 +55,7 @@ are as follows:
     - "assessor" and "claim" ref
   - "assessor"
     - "thirdParty" -> true
-    - "organization" -> "name"
+    - "organization" -> "your organization name"
   - "claim"
     - Must only be 1 "claim" under "claims"
     - "target" ref to the target "component" definition
