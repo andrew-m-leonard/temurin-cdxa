@@ -34,6 +34,7 @@ java -cp "build/jar/temurin-gen-cdxa.jar:build/jar/cyclonedx-core-java.jar:build
 --affirmation-stmt 'Acme confirms a verified reproducible build' \
 --evidence 'Console log output from diff script......100% identical'
 
+
 ```
 
 ## CDXA.xml format
