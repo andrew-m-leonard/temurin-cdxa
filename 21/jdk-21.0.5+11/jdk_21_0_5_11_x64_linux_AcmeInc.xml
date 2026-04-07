@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bom serialNumber="urn:uuid:3b14575e-470d-493b-9d55-7fe48b581542" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+  <declarations>
+    <assessors>
+      <assessor bom-ref="assessor-1">
+        <thirdParty>true</thirdParty>
+        <organization>
+          <name>Acme Inc</name>
+        </organization>
+      </assessor>
+    </assessors>
+    <attestations>
+      <attestation>
+        <summary>Eclipse Temurin Attestation</summary>
+        <assessor>assessor-1</assessor>
+        <map>
+          <claims>
+            <claim>claim-1</claim>
+          </claims>
+        </map>
+      </attestation>
+    </attestations>
+    <claims>
+      <claim bom-ref="claim-1">
+        <target>target-jdk-1</target>
+        <predicate>VERIFIED_REPRODUCIBLE_BUILD</predicate>
+        <evidence>evidence-1</evidence>
+      </claim>
+    </claims>
+    <evidence>
+      <evidence bom-ref="evidence-1">
+        <propertyName>VERIFICATION_LOG</propertyName>
+        <data>
+          <name>log</name>
+          <contents>
+            <attachment content-type="text/plain">Console log output from diff script......100% identical</attachment>
+          </contents>
+        </data>
+      </evidence>
+    </evidence>
+    <targets>
+      <components>
+        <component type="application" bom-ref="target-jdk-1">
+          <name>Temurin jdk-21.0.5+11 x64_linux</name>
+          <version>jdk-21.0.5+11</version>
+          <externalReferences>
+            <reference type="distribution">
+              <url>https://api.adoptium.net/v3/binary/version/jdk-21.0.5+11/linux/x64/jdk/hotspot/normal/eclipse</url>
+              <hashes>
+                <hash alg="SHA-256">3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd8c</hash>
+              </hashes>
+            </reference>
+          </externalReferences>
+          <properties>
+            <property name="platform">x64_linux</property>
+            <property name="imageType">jdk</property>
+            <property name="jvmImpl">hotspot</property>
+          </properties>
+        </component>
+      </components>
+    </targets>
+    <affirmation>
+      <statement>Acme confirms a verified reproducible build</statement>
+    </affirmation>
+  </declarations>
+</bom>
