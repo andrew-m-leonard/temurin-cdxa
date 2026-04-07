@@ -83,7 +83,10 @@ are as follows:
       - "url" - Adoptium API to retrieve the exact binary that was verified:
         - https://api.adoptium.net/v3/binary/version/<TAG>/<OS>/<ARCH>/jdk/hotspot/normal/eclipse
       - "hash" - SHA-256 hash of the verified JDK tarball/zip matching the hash from the Adoptium API
-    - "properties" - "property" with name "platform" and the value <OS>_<ARCH>
+    - "properties" :
+      - "platform" -> "\<OS\>\_\<ARCH\>"
+      - "imageType" -> "jdk"
+      - "jvmImpl" -> "hotspot"
   - "affirmation"
     - "statement" - Affirmation containing free format word statement stating that you verified the reproducibility. Also this statement can be used to give guidance on how the CDXA.xml and CDXA.xml.sig signing can be verified from your organization public key.
 
