@@ -48,11 +48,11 @@ The specific Temurin CDXA.xml required format and validation rules, for this pro
 are as follows:
 - The filename and path for the CDXA.xml must be :
   - \<major version number\>/\<jdk-tag\>/\<jdk-tag, -,.,+ changed to \_\>\_\<arch\>\_\<os\>\_\<your organization name, with no whitespace\>.xml
-    - Example: 26/jdk-26+35/jdk_26_35_aarch64_linux_AcmeLtd.xml
+    - Example: 26/jdk-26+35/jdk_26_35_aarch64_linux_AcmeInc.xml
   - arch: x64, ppc64le, s390x, aarch64
   - os: linux, windows, mac
 - The CDXA.xml must have been signed using a detached signature method, and submitted with the same name but with .xml.sig extension
-  - Example: 26/jdk-26+35/jdk_26_35_aarch64_linux_AcmeLtd.xml.sig
+  - Example: 26/jdk-26+35/jdk_26_35_aarch64_linux_AcmeInc.xml.sig
 
 - Mandatory elements of the attestation declarations :
   - "attestation"
@@ -162,8 +162,8 @@ Compare identical !
     </targets>
     <affirmation>
       <statement>
-Acme Ltd confirms a verified reproducible build.
-This document is signed by public GPG key Acme Ltd key details.
+Acme Inc confirms a verified reproducible build.
+This document is signed by public GPG key Acme Inc key details.
       </statement>
     </affirmation>
   </declarations>
