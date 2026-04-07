@@ -47,7 +47,7 @@ The CycloneDX Attestation document conforms to the schema defined here: https://
 The specific Temurin CDXA.xml required format and validation rules, for this project
 are as follows:
 - The filename and path for the CDXA.xml must be :
-  - \<major version number\>/\<jdk-tag\>/\<jdk-tag\>\_\<arch\>\_\<os\>\_\<your organization name, with no whitespace\>.xml
+  - \<major version number\>/\<jdk-tag\>/\<jdk-tag, -,.,+ changed to \_\>\_\<arch\>\_\<os\>\_\<your organization name, with no whitespace\>.xml
     - Example: 26/jdk-26+35/jdk_26_35_aarch64_linux_AcmeLtd.xml
   - arch: x64, ppc64le, s390x, aarch64
   - os: linux, windows, mac
