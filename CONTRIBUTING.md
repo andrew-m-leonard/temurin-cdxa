@@ -51,7 +51,7 @@ are as follows:
 
 - Mandatory elements of the attestation declarations :
   - "attestation"
-    - "summary"
+    - "summary" -> "Eclipse Temurin CycloneDX Attestation"
     - "assessor" and "claim" ref
   - "assessor"
     - "thirdParty" -> true
@@ -77,7 +77,7 @@ are as follows:
     - "externalReferences" - "reference" with type="distribution"
       - "url" - Adoptium API to retrieve the exact binary that was verified:
         - https://api.adoptium.net/v3/binary/version/<TAG>/<OS>/<ARCH>/jdk/hotspot/normal/eclipse
-      - "hash" - SHA-256 hash of the JDK tarball matching the hash from the Adoptium API
+      - "hash" - SHA-256 hash of the verified JDK tarball/zip matching the hash from the Adoptium API
     - "properties" - "property" with name "platform" and the value <OS>_<ARCH>
   - "affirmation"
     - "statement" - Affirmation containing free format word statement stating that you verified the reproducibility. Also this statement can be used to give guidance on how the CDXA.xml and CDXA.xml.sig signing can be verified from your organization public key.
@@ -86,7 +86,7 @@ are as follows:
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:e1dd65ca-779f-4a9b-a2e1-069099a68469" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:30b383c7-01f5-45bf-b153-d1507eccfc80" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <declarations>
     <assessors>
       <assessor bom-ref="assessor-1">
@@ -98,7 +98,7 @@ are as follows:
     </assessors>
     <attestations>
       <attestation>
-        <summary>Eclipse Temurin Attestation</summary>
+        <summary>Eclipse Temurin CycloneDX Attestation</summary>
         <assessor>assessor-1</assessor>
         <map>
           <claims>
