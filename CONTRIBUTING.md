@@ -30,7 +30,7 @@ java -cp "build/jar/temurin-gen-cdxa.jar:build/jar/cyclonedx-core-java.jar:build
 --predicate VERIFIED_REPRODUCIBLE_BUILD \
 --target-aarch x64 \
 --target-os linux \
---target-release xjdk-21.0.5+11 \
+--target-release jdk-21.0.5+11 \
 --verified-jdk-file /path-to-verified-tar.gz-or-zip \
 --affirmation-stmt 'Acme confirms a verified reproducible build' \
 --evidence 'Console log output from diff script......100% identical'
