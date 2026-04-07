@@ -84,7 +84,7 @@ are as follows:
         - https://api.adoptium.net/v3/binary/version/<TAG>/<OS>/<ARCH>/jdk/hotspot/normal/eclipse
       - "hash" - SHA-256 hash of the verified JDK tarball/zip matching the hash from the Adoptium API
     - "properties" :
-      - "platform" -> "\<OS\>\_\<ARCH\>"
+      - "platform" -> "\<ARCH\>\_\<OS\>"
       - "imageType" -> "jdk"
       - "jvmImpl" -> "hotspot"
   - "affirmation"
