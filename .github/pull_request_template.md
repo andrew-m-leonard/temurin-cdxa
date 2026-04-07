@@ -16,5 +16,5 @@ Guidelines on contributing a CycloneDX CDXA document: https://github.com/adoptiu
 # Checklist
 
 - [ ] Generated \<CDXA\>.xml and signed with a detached signature \<CDXA\>.xml.sig. For CDXA creation guidelines see: https://github.com/adoptium/temurin-cdxa/CONTRIBUTING.md
-- [ ] All <\CDXA\>.xml documents pass "Validate CycloneDX CDXA" github action check
+- [ ] All \<CDXA\>.xml documents pass "Validate CycloneDX CDXA" github action check
 
