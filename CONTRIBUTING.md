@@ -5,11 +5,17 @@
 This repository is for the contribution of CycloneDX Attestation (CDXA) documents
 along with an accompanying detached signature from signing your documents.
 
-The CDXA document confirms the successful 3rd party Reproducible Verification
+The CDXA document confirms the successful (100% identical) 3rd party Reproducible Verification
 of an Eclipse Temurin JDK.
 
 For details on the Reproducible Verification process and guidelines,
 see: https://github.com/adoptium/temurin-build/wiki/Temurin-3rd-Party-Reproducible-Verification-Guides
+
+The Reproducible Verification scripts outlined in the [guide](https://github.com/adoptium/temurin-build/wiki/Temurin-3rd-Party-Reproducible-Verification-Guides) will only report
+"success" upon a "100% identical" comparison.
+
+For guidance on reporting "Reproducible Verification" failures or non-100% identical issues, please
+see the problem diagnosis and reporting guidance here: https://github.com/adoptium/temurin-build/wiki/Temurin-3rd-Party-Reproducible-Verification-Guides#reporting-reproducible-verification-problems-or-failures
 
 ## CDXA.xml generation
 
