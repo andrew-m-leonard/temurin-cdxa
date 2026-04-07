@@ -12,6 +12,7 @@ For details on the Reproducible Verification process and guidelines,
 see: https://github.com/adoptium/temurin-build/wiki/Temurin-3rd-Party-Reproducible-Verification-Guides
 
 ## CDXA.xml generation
+
 - The easiest way to generate a valid CDXA.xml is by using a Java client class which can be obtained
 and compiled from https://github.com/adoptium/temurin-build/blob/master/cyclonedx-lib/src/temurin/sbom/TemurinGenCDXA.java.
 Requires any suitable jdk-17+ JDK and "ant" to build.
