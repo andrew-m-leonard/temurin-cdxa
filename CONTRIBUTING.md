@@ -34,6 +34,10 @@ java -cp "build/jar/temurin-gen-cdxa.jar:build/jar/cyclonedx-core-java.jar:build
 --verified-jdk-file /path-to-verified-tar.gz-or-zip \
 --affirmation-stmt 'Acme confirms a verified reproducible build' \
 --evidence 'Console log output from diff script......100% identical'
+
+Output:
+Computed SHA-256: 3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd8c
+CDXA file written to: build/jdk_21_0_5_11_x64_linux_AcmeInc.xml
 ```
 
 ## CDXA.xml format
