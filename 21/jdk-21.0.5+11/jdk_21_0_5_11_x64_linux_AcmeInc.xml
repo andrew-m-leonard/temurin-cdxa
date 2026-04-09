@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:0edaad14-fd83-4444-a95f-275acae9554a" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:09196378-488d-4486-a1da-1632aed95da8" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <declarations>
     <assessors>
       <assessor bom-ref="assessor-1">
@@ -37,7 +37,7 @@
 12:20:47 : Comparing expanded JDKs from jdk-21.0.5+11 with reproJDK/jdk-21.0.5+11 ...
 12:20:50 : diff complete - rc=0.
 Number of differences: 0
-ReproduciblePercent = 99.99 %
+ReproduciblePercent = 100 %
 Successful 100% Reproducible Verification
 Eclipse Temurin version: jdk-21.0.5+11
                    arch: x64
@@ -69,7 +69,7 @@ Eclipse Temurin version: jdk-21.0.5+11
       </components>
     </targets>
     <affirmation>
-      <statement>Acme confirms a verified reproducible build. Public signing key can be found at ...</statement>
+      <statement>Acme confirms a verified reproducible build</statement>
     </affirmation>
   </declarations>
 </bom>
