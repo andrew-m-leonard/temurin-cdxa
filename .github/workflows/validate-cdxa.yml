@@ -321,6 +321,13 @@ jobs:
                   exit 1
               fi
 
+              # Verify evidence indicates 100% reproducible build
+              if ! echo "$EVIDENCE_ATTACHMENT_CONTENT" | grep -q "ReproduciblePercent[[:space:]]*=[[:space:]]*100[[:space:]]*%"; then
+                  echo "ERROR: $XML_FILE evidence attachment does not indicate a successful 100% reproducible verification"
+                  echo "       Expected to find 'ReproduciblePercent = 100 %' in evidence text"
+                  exit 1
+              fi
+
               # Verify one assessor exists
               if ! [ $(xpath -q -e 'count(/bom/declarations/assessors/assessor)' "$XML_FILE") -eq 1 ]; then
                   echo "ERROR: $XML_FILE CDXA document does not contain a single /bom/declarations/assessors/assessor"
