@@ -2,7 +2,7 @@
 Thank you for your pull request for contributing a CycloneDX Attestation (CDXA)
 confirming the successful 3rd party Reproducible Verification of an Eclipse Temurin JDK.
 
-Your CDXA.xml document will automatically be verified it conforms to the required
+Your CDXA.xml document will automatically be verified that it conforms to the required
 format and required fields.
 
 Your CDXA.xml documents must also have been "signed" by you or your organisation,
