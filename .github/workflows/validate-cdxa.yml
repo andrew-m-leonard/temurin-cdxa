@@ -40,7 +40,7 @@ jobs:
       - name: Install libxml-xpath-perl
         run: |
           sudo apt-get update
-          sudo apt-get install libxml-xpath-perl=1.48-1
+          sudo apt-get install libxml-xpath-perl
 
       - name: Validate CDXA documents using cyclonedx-cli
         run: |
