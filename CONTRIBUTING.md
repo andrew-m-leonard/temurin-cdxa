@@ -52,7 +52,7 @@ CDXA file written to: build/jdk_21_0_5_11_x64_linux_AcmeInc.xml
 
 ## CDXA.xml format
 
-The CycloneDX Attestation document conforms to the schema defined here: https://cyclonedx.org/docs/1.6/json/#declarations_attestations
+The CycloneDX Attestation document conforms to the schema defined here: https://cyclonedx.org/docs/1.6/xml/#type_declarationsType
 
 The specific Temurin CDXA.xml required format and validation rules, for this project
 are as follows:
