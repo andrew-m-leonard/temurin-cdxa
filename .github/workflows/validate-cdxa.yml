@@ -276,6 +276,51 @@ jobs:
                   exit 1
               fi
 
+              # Validate evidence attachment content fields
+              # Extract version from evidence
+              EVIDENCE_VERSION=$(echo "$EVIDENCE_ATTACHMENT_CONTENT" | grep "Eclipse Temurin version:" | sed 's/.*Eclipse Temurin version:[[:space:]]*\([^[:space:]]*\).*/\1/')
+              if [[ -z "$EVIDENCE_VERSION" ]]; then
+                  echo "ERROR: $XML_FILE evidence attachment does not contain 'Eclipse Temurin version:' field"
+                  exit 1
+              fi
+              if [[ "$EVIDENCE_VERSION" != "$FULL_TAG" ]]; then
+                  echo "ERROR: $XML_FILE evidence version ($EVIDENCE_VERSION) does not match expected version ($FULL_TAG)"
+                  exit 1
+              fi
+
+              # Extract arch from evidence
+              EVIDENCE_ARCH=$(echo "$EVIDENCE_ATTACHMENT_CONTENT" | grep "arch:" | sed 's/.*arch:[[:space:]]*\([^[:space:]]*\).*/\1/')
+              if [[ -z "$EVIDENCE_ARCH" ]]; then
+                  echo "ERROR: $XML_FILE evidence attachment does not contain 'arch:' field"
+                  exit 1
+              fi
+              if [[ "$EVIDENCE_ARCH" != "$PLATFORM_ARCH" ]]; then
+                  echo "ERROR: $XML_FILE evidence arch ($EVIDENCE_ARCH) does not match expected arch ($PLATFORM_ARCH)"
+                  exit 1
+              fi
+
+              # Extract os from evidence
+              EVIDENCE_OS=$(echo "$EVIDENCE_ATTACHMENT_CONTENT" | grep "os:" | sed 's/.*os:[[:space:]]*\([^[:space:]]*\).*/\1/')
+              if [[ -z "$EVIDENCE_OS" ]]; then
+                  echo "ERROR: $XML_FILE evidence attachment does not contain 'os:' field"
+                  exit 1
+              fi
+              if [[ "$EVIDENCE_OS" != "$PLATFORM_OS" ]]; then
+                  echo "ERROR: $XML_FILE evidence os ($EVIDENCE_OS) does not match expected os ($PLATFORM_OS)"
+                  exit 1
+              fi
+
+              # Extract sha256 from evidence
+              EVIDENCE_SHA256=$(echo "$EVIDENCE_ATTACHMENT_CONTENT" | grep "sha256:" | sed 's/.*sha256:[[:space:]]*\([^[:space:]]*\).*/\1/')
+              if [[ -z "$EVIDENCE_SHA256" ]]; then
+                  echo "ERROR: $XML_FILE evidence attachment does not contain 'sha256:' field"
+                  exit 1
+              fi
+              if [[ "$EVIDENCE_SHA256" != "$CDXA_HASH" ]]; then
+                  echo "ERROR: $XML_FILE evidence sha256 ($EVIDENCE_SHA256) does not match expected hash ($CDXA_HASH)"
+                  exit 1
+              fi
+
               # Verify one assessor exists
               if ! [ $(xpath -q -e 'count(/bom/declarations/assessors/assessor)' "$XML_FILE") -eq 1 ]; then
                   echo "ERROR: $XML_FILE CDXA document does not contain a single /bom/declarations/assessors/assessor"
