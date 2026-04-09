@@ -34,15 +34,19 @@ java -cp "build/jar/temurin-gen-cdxa.jar:build/jar/cyclonedx-core-java.jar:build
 --cdxa-output-folder build \
 --attesting-org-name 'Acme Inc' \
 --predicate VERIFIED_REPRODUCIBLE_BUILD \
---target-aarch x64 \
---target-os linux \
---target-release jdk-21.0.5+11 \
---verified-jdk-file /path-to-verified-tar.gz-or-zip \
---affirmation-stmt 'Acme confirms a verified reproducible build' \
---evidence 'Console log output from diff script......100% identical'
+--evidence reproducible_evidence.log \
+--affirmation-stmt 'Acme confirms a verified reproducible build. Public signing key can be found at ...'
 
 Output:
-Computed SHA-256: 3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd8c
+Read evidence from file: reproducible_evidence.log (426 characters)
+Extracted from evidence:
+  Version: jdk-21.0.5+11
+  Arch: x64
+  OS: linux
+  SHA-256: 3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd8c
+Querying Adoptium API: https://api.adoptium.net/v3/checksum/version/jdk-21.0.5+11/linux/x64/jdk/hotspot/normal/eclipse
+Adoptium API hash: 3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd8c
+[OK] Evidence SHA-256 matches Adoptium API hash
 CDXA file written to: build/jdk_21_0_5_11_x64_linux_AcmeInc.xml
 ```
 
@@ -77,7 +81,7 @@ are as follows:
     - "propertyName" must be "VERIFICATION_LOG"
     - "data"
       - "name" must be "log"
-      - "contents" must provide a "text/plain" "attachment" free form text, which contains the output from the Reproducible Verification process confirming 100% identical
+      - "contents" must provide a "text/plain" "attachment" text, which contains the "reproducible_evidence.log" contents from the Reproducible Verification process scripts confirming the Temurin version, arch, os, sha256 and 100% success
   - "targets"
     - Must only contain 1 "component" with type "application"
     - "name" must be a correctly formatted string of the form: "Temurin TAG ARCH_OS", eg. "Temurin jdk-21.0.5+11 x64_linux"
@@ -135,11 +139,16 @@ are as follows:
           <name>log</name>
           <contents>
             <attachment content-type="text/plain">
-Comparing expanded JDKs from jdk-21.0.5+11 with reproJDK/jdk-21.0.5+11
-diff complete - rc=0. Output written to file: reprotest.diff
+Number of files: 108721
+12:20:47 : Comparing expanded JDKs from jdk-21.0.5+11 with reproJDK/jdk-21.0.5+11 ...
+12:20:50 : diff complete - rc=0.
 Number of differences: 0
 ReproduciblePercent = 100 %
-Compare identical !
+Successful 100% Reproducible Verification
+Eclipse Temurin version: jdk-21.0.5+11
+                   arch: x64
+                     os: linux
+                 sha256: 3c654d98404c073b8a7e66bffb27f4ae3e7ede47d13284c132d40a83144bfd8c
             </attachment>
           </contents>
         </data>
