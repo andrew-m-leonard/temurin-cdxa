@@ -74,7 +74,7 @@ are as follows:
   - "claim"
     - Must only be 1 "claim" under "claims"
     - "target" ref to the target "component" definition
-    - "predicate" most be "VERIFIED_REPRODUCIBLE_BUILD"
+    - "predicate" must be "VERIFIED_REPRODUCIBLE_BUILD"
     - "evidence" ref to the "evidence" definition
   - "evidence"
     - Must only be 1 "evidence" under top-level "evidence"
