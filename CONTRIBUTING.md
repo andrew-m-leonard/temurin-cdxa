@@ -12,7 +12,8 @@ For details on the Reproducible Verification process and guidelines,
 see: https://github.com/adoptium/temurin-build/wiki/Temurin-3rd-Party-Reproducible-Verification-Guides
 
 The Reproducible Verification scripts outlined in the [guide](https://github.com/adoptium/temurin-build/wiki/Temurin-3rd-Party-Reproducible-Verification-Guides) will only report
-"success" upon a "100% identical" comparison.
+"success" upon a "100% identical" comparison. Upon a 100% Reproducible Verification, the script will output a reproducible_evidence.log file, which is then used as
+input to the [TemurinGenCDXA](https://github.com/adoptium/temurin-build/blob/master/cyclonedx-lib/src/temurin/sbom/TemurinGenCDXA.java) client to produce a valid CDXA.xml document.
 
 For guidance on reporting "Reproducible Verification" failures or non-100% identical issues, please
 see the problem diagnosis and reporting guidance here: https://github.com/adoptium/temurin-build/wiki/Temurin-3rd-Party-Reproducible-Verification-Guides#reporting-reproducible-verification-problems-or-failures
@@ -20,7 +21,7 @@ see the problem diagnosis and reporting guidance here: https://github.com/adopti
 ## CDXA.xml generation
 
 - The easiest way to generate a valid CDXA.xml is by using a Java client class which can be obtained
-and compiled from https://github.com/adoptium/temurin-build/blob/master/cyclonedx-lib/src/temurin/sbom/TemurinGenCDXA.java.
+and compiled from [TemurinGenCDXA.java](https://github.com/adoptium/temurin-build/blob/master/cyclonedx-lib/src/temurin/sbom/TemurinGenCDXA.java).
 Requires any suitable jdk-17+ JDK and "ant" to build.
 ```
 git clone https://github.com/adoptium/temurin-build.git
